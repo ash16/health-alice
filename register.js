@@ -1,14 +1,26 @@
-var questions = [
+var question = ["Are you a doctor?"]
+
+var common_questions = [
   {question:"What's your first name?"},
   {question:"What's your last name?"},
+]
+
+var doctor_questions = common_questions.concat([
+  {question:"What's your specialization?"}
+]);
+
+var isDoctor = false;
+
+var patient_questions = common_questions.concat([
   {question:"What's your height in centimeters?"},
   {question:"What's your weight in pounds?"},
   {question:"What's your age?"},
+  {question:"What's your gender?"},
   {question:"Are you allergic to any medication? If yes list them, else say no!"},
   {question:"Do you have past medical history of any of these diseases?"},
   {question:"Does anyone in your family have past medical history of any of these diseases?"},
   {question:"List your emergency contact number!"}
-];(function(){
+]);(function(){
 
   var tTime = 100  // transition transform time from #register in ms
   var wTime = 200  // transition width time from #register in ms
@@ -18,7 +30,40 @@ var questions = [
   // --------------
   var position = 0
 
-  putQuestion()
+  checkIfDoctor()
+  function checkIfDoctor() {
+    inputLabel = document.getElementById('inputLabel');
+    inputField = document.getElementById('inputField');
+    inputField.className = "question";
+    inputLabel.innerHTML = question[0];
+    
+    document.getElementById('inputField').setAttribute("style", "display: none");
+    document.getElementById('inputProgress').setAttribute("style", "display: none");
+    document.getElementById('doctor_patient').setAttribute("style", "display: block");
+    document.getElementById('doctor_patient_submit').setAttribute("style", "display: block");
+
+    inputField.focus()
+    showCurrent()
+  }
+
+  doctor_patient_submit.addEventListener('click', function(e) {
+    //transform(0, 0)
+    isDoctor = document.getElementById('Doctor_Yes').checked;
+    console.log(isDoctor);
+
+    if (isDoctor){
+      questions = doctor_questions;
+    }
+    else{
+      questions = patient_questions;
+    }
+    
+    document.getElementById('doctor_patient').setAttribute("style", "display: none");
+    document.getElementById('doctor_patient_submit').setAttribute("style", "display: none");
+
+    putQuestion()
+  })
+
 
   progressButton.addEventListener('click', validate)
   inputField.addEventListener('keyup', function(e){
@@ -33,41 +78,48 @@ var questions = [
     validate();
   })
 
-var answers = ["", "", "", "", "", "", ""];
-var answers_map = {firstName : "", 
-               lastName : "", 
-               height : "",
-               weight : "",
-               age : "",
-               medicationalAllergies : "",
-               diseaseHistory : [], 
-               familyDiseaseHistory : [],
-               emergencyContact : ""
-             };
+  gender_submit.addEventListener('click', function(e) {
+    validate();
+  })
 
+  var answers = ["", "", "", "", "", "", "", "", "", ""];
+  var answers_map = { };
 
   // functions
   // --------------
 
   // load the next question
   function putQuestion() {
+    console.log(questions);
     inputLabel = document.getElementById('inputLabel');
     inputField = document.getElementById('inputField');
     inputField.className = "question";
     inputLabel.innerHTML = questions[position].question;
     
     inputField.value = ''
-    inputField.type = questions[position].type || 'text'  
-    if (position === 6) {
+    inputField.type = questions[position].type || 'text'
+    if (position === 5 && !isDoctor) {
+      document.getElementById('inputField').setAttribute("style", "display: none");
+      document.getElementById('inputProgress').setAttribute("style", "display: none");
+      document.getElementById('diseases').setAttribute("style", "display: none");
+      document.getElementById('submitOK').setAttribute("style", "display: none");
+      document.getElementById('gender').setAttribute("style", "display: block");
+      document.getElementById('gender_submit').setAttribute("style", "display: block");
+    }
+    else if (position == 7 && !isDoctor) {
       document.getElementById('inputField').setAttribute("style", "display: none");
       document.getElementById('inputProgress').setAttribute("style", "display: none");
       document.getElementById('diseases').setAttribute("style", "display: block");
       document.getElementById('submitOK').setAttribute("style", "display: block");
+      document.getElementById('gender').setAttribute("style", "display: none");
+      document.getElementById('gender_submit').setAttribute("style", "display: none");
     } else {
       document.getElementById('inputField').setAttribute("style", "display: block");
       document.getElementById('inputProgress').setAttribute("style", "display: block");
       document.getElementById('diseases').setAttribute("style", "display: none");
       document.getElementById('submitOK').setAttribute("style", "display: none");
+      document.getElementById('gender').setAttribute("style", "display: none");
+      document.getElementById('gender_submit').setAttribute("style", "display: none");
     }
     inputField.focus()
     showCurrent()
@@ -75,15 +127,24 @@ var answers_map = {firstName : "",
   
   // when all the questions have been answered
   function done() {
+    answers_map['id'] = window.sessionStorage.getItem("username");
+    answers_map["isDoctor"] = isDoctor;
     answers_map["firstName"] = answers[0];
     answers_map["lastName"] = answers[1];
-    answers_map["height"] = answers[2];
-    answers_map["weight"] = answers[3];
-    answers_map["age"] = answers[4];
-    answers_map["medicationalAllergies"] = answers[5];
-    answers_map["diseaseHistory"] = answers[6];
-    answers_map["familyDiseaseHistory"] = answers[7];
-    answers_map["emergencyContact"] = answers[8];
+
+    if (isDoctor){
+      answers_map["specialization"] = answers[2];
+    }
+    else{
+      answers_map["height"] = answers[2];
+      answers_map["weight"] = answers[3];
+      answers_map["age"] = answers[4];
+      answers_map["gender"] = answers[5].toLowerCase();
+      answers_map["medicationalAllergies"] = answers[6];
+      answers_map["diseaseHistory"] = answers[7];
+      answers_map["familyDiseaseHistory"] = answers[8];
+      answers_map["emergencyContact"] = answers[9];
+    }
     console.log(answers_map);
     // remove the box if there is no next question
     register.className = 'close'
@@ -95,13 +156,21 @@ var answers_map = {firstName : "",
       register.parentElement.appendChild(h1)     
       setTimeout(function() {h1.style.opacity = 1}, 50)
     }, eTime)
-    
+
+    const Http = new XMLHttpRequest();
+    const url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/user';
+    Http.open("POST", url);
+    Http.send(body=JSON.stringify(answers_map));
+    userExists = 0;
+    Http.onreadystatechange=(e)=>{
+      console.log(Http);
+      window.location.replace("index.html#id_token=" + window.sessionStorage.getItem("token"));
+    }
   }
 
   // when submitting the current question
   function validate() {
-
-    if (position === 6) {
+    if (position === 7) {
       diseases = [];
       if (document.getElementById('Diabetes').checked) diseases.push('Diabetes');
       if (document.getElementById('HeartConditions').checked) diseases.push('Heart Conditions');
@@ -111,6 +180,11 @@ var answers_map = {firstName : "",
       if (document.getElementById('None').checked) diseases.push('None');
       answers[position] = diseases;
       position += 1;
+    } 
+    else if (position === 5){
+      if (document.getElementById('Gender_Male').checked) answers[position] = 'male';
+      else answers[position] = 'female';
+      position += 1
     } else {
       // set the value of the field into the array
       questions[position].value = inputField.value;
@@ -123,6 +197,7 @@ var answers_map = {firstName : "",
       })
     }
     // if there is a new question, hide current and load next
+    console.log(answers);
     if (questions[position+1]) hideCurrent(putQuestion)
     else hideCurrent(done)
   }
@@ -162,5 +237,4 @@ var answers_map = {firstName : "",
       setTimeout(transform, tTime * 6, 0, 0)
       setTimeout(callback,  tTime * 7)
   }
-
 }())
