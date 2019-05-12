@@ -15,6 +15,7 @@ var patient_questions = common_questions.concat([
   {question:"What's your height in centimeters?"},
   {question:"What's your weight in pounds?"},
   {question:"What's your age?"},
+  {question:"What's your gender?"},
   {question:"Are you allergic to any medication? If yes list them, else say no!"},
   {question:"Do you have past medical history of any of these diseases?"},
   {question:"Does anyone in your family have past medical history of any of these diseases?"},
@@ -77,7 +78,11 @@ var patient_questions = common_questions.concat([
     validate();
   })
 
-  var answers = ["", "", "", "", "", "", ""];
+  gender_submit.addEventListener('click', function(e) {
+    validate();
+  })
+
+  var answers = ["", "", "", "", "", "", "", "", "", ""];
   var answers_map = { };
 
   // functions
@@ -92,17 +97,29 @@ var patient_questions = common_questions.concat([
     inputLabel.innerHTML = questions[position].question;
     
     inputField.value = ''
-    inputField.type = questions[position].type || 'text'  
-    if (position == 6 && !isDoctor) {
+    inputField.type = questions[position].type || 'text'
+    if (position === 5 && !isDoctor) {
+      document.getElementById('inputField').setAttribute("style", "display: none");
+      document.getElementById('inputProgress').setAttribute("style", "display: none");
+      document.getElementById('diseases').setAttribute("style", "display: none");
+      document.getElementById('submitOK').setAttribute("style", "display: none");
+      document.getElementById('gender').setAttribute("style", "display: block");
+      document.getElementById('gender_submit').setAttribute("style", "display: block");
+    }
+    else if (position == 7 && !isDoctor) {
       document.getElementById('inputField').setAttribute("style", "display: none");
       document.getElementById('inputProgress').setAttribute("style", "display: none");
       document.getElementById('diseases').setAttribute("style", "display: block");
       document.getElementById('submitOK').setAttribute("style", "display: block");
+      document.getElementById('gender').setAttribute("style", "display: none");
+      document.getElementById('gender_submit').setAttribute("style", "display: none");
     } else {
       document.getElementById('inputField').setAttribute("style", "display: block");
       document.getElementById('inputProgress').setAttribute("style", "display: block");
       document.getElementById('diseases').setAttribute("style", "display: none");
       document.getElementById('submitOK').setAttribute("style", "display: none");
+      document.getElementById('gender').setAttribute("style", "display: none");
+      document.getElementById('gender_submit').setAttribute("style", "display: none");
     }
     inputField.focus()
     showCurrent()
@@ -122,10 +139,11 @@ var patient_questions = common_questions.concat([
       answers_map["height"] = answers[2];
       answers_map["weight"] = answers[3];
       answers_map["age"] = answers[4];
-      answers_map["medicationalAllergies"] = answers[5];
-      answers_map["diseaseHistory"] = answers[6];
-      answers_map["familyDiseaseHistory"] = answers[7];
-      answers_map["emergencyContact"] = answers[8];
+      answers_map["gender"] = answers[5].toLowerCase();
+      answers_map["medicationalAllergies"] = answers[6];
+      answers_map["diseaseHistory"] = answers[7];
+      answers_map["familyDiseaseHistory"] = answers[8];
+      answers_map["emergencyContact"] = answers[9];
     }
     console.log(answers_map);
     // remove the box if there is no next question
@@ -152,7 +170,7 @@ var patient_questions = common_questions.concat([
 
   // when submitting the current question
   function validate() {
-    if (position === 6) {
+    if (position === 7) {
       diseases = [];
       if (document.getElementById('Diabetes').checked) diseases.push('Diabetes');
       if (document.getElementById('HeartConditions').checked) diseases.push('Heart Conditions');
@@ -162,6 +180,11 @@ var patient_questions = common_questions.concat([
       if (document.getElementById('None').checked) diseases.push('None');
       answers[position] = diseases;
       position += 1;
+    } 
+    else if (position === 5){
+      if (document.getElementById('Gender_Male').checked) answers[position] = 'male';
+      else answers[position] = 'female';
+      position += 1
     } else {
       // set the value of the field into the array
       questions[position].value = inputField.value;
@@ -174,6 +197,7 @@ var patient_questions = common_questions.concat([
       })
     }
     // if there is a new question, hide current and load next
+    console.log(answers);
     if (questions[position+1]) hideCurrent(putQuestion)
     else hideCurrent(done)
   }
