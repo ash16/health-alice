@@ -12,6 +12,7 @@ $(window).scroll(function(){
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
+    console.log(url, name);
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[#&]' + name + '(=([^&#]*)|&|#|$)'),
         results = regex.exec(url);
@@ -30,7 +31,6 @@ function parseJwt (token) {
 };
 og_token = getParameterByName('id_token');
 token = parseJwt(og_token);
-console.log(token);
 
 const Http = new XMLHttpRequest();
 const url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/user?userid='+token['email'];
@@ -39,8 +39,9 @@ Http.send();
 userExists = 0;
 Http.onreadystatechange=(e)=>{
     userExists = Http.responseText;
-    console.log(userExists);
     if(userExists=='0') {
+        window.sessionStorage.setItem("token", og_token);
+        window.sessionStorage.setItem("username", token['email'])
         window.location.replace("register.html#id_token=" + og_token);
     };
 }

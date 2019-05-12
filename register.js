@@ -33,18 +33,17 @@ var questions = [
     validate();
   })
 
-var answers = ["", "", "", "", "", "", ""];
-var answers_map = {firstName : "", 
-               lastName : "", 
-               height : "",
-               weight : "",
-               age : "",
-               medicationalAllergies : "",
-               diseaseHistory : [], 
-               familyDiseaseHistory : [],
-               emergencyContact : ""
-             };
-
+  var answers = ["", "", "", "", "", "", ""];
+  var answers_map = {firstName : "", 
+                lastName : "", 
+                height : "",
+                weight : "",
+                age : "",
+                medicationalAllergies : "",
+                diseaseHistory : [], 
+                familyDiseaseHistory : [],
+                emergencyContact : ""
+              };
 
   // functions
   // --------------
@@ -75,6 +74,7 @@ var answers_map = {firstName : "",
   
   // when all the questions have been answered
   function done() {
+    answers_map['id'] = window.sessionStorage.getItem("username")
     answers_map["firstName"] = answers[0];
     answers_map["lastName"] = answers[1];
     answers_map["height"] = answers[2];
@@ -84,6 +84,7 @@ var answers_map = {firstName : "",
     answers_map["diseaseHistory"] = answers[6];
     answers_map["familyDiseaseHistory"] = answers[7];
     answers_map["emergencyContact"] = answers[8];
+    answers_map["isDoctor"] = "false"
     console.log(answers_map);
     // remove the box if there is no next question
     register.className = 'close'
@@ -95,12 +96,19 @@ var answers_map = {firstName : "",
       register.parentElement.appendChild(h1)     
       setTimeout(function() {h1.style.opacity = 1}, 50)
     }, eTime)
-    
+
+    const Http = new XMLHttpRequest();
+    const url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/user';
+    Http.open("POST", url);
+    Http.send(body=JSON.stringify(answers_map));
+    userExists = 0;
+    Http.onreadystatechange=(e)=>{
+      window.location.replace("index.html#id_token=" + window.sessionStorage.getItem("token"));
+    }
   }
 
   // when submitting the current question
   function validate() {
-
     if (position === 6) {
       diseases = [];
       if (document.getElementById('Diabetes').checked) diseases.push('Diabetes');
@@ -162,5 +170,4 @@ var answers_map = {firstName : "",
       setTimeout(transform, tTime * 6, 0, 0)
       setTimeout(callback,  tTime * 7)
   }
-
 }())
