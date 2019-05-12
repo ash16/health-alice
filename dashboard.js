@@ -44,7 +44,7 @@ Http.onreadystatechange=(e)=>{
     if(response.size==0) {
         window.sessionStorage.setItem("token", og_token);
         window.sessionStorage.setItem("username", token['email'])
-        window.location.replace("register.html#id_token=" + og_token);
+            window.location.replace("register.html#id_token=" + og_token);
     }else {
         response = JSON.parse(response);
     }
@@ -95,7 +95,7 @@ var additionalParams = {
 };
 
 var apigClient = apigClientFactory.newClient({
-  apiKey: 'z2Tg3V2lpP2i8chmYCcKY564upvcYpep3Z9eSI0b'
+  apiKey: ''
 });
 
 function submitSymptom() {
