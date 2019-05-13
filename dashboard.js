@@ -63,7 +63,7 @@ my_data = []
 function init() {
   var uri = "https://authservice.priaid.ch/login";
   var api_key = "n3A9J_GMAIL_COM_AUT";
-  var secret_key = "Ft3q8C2MyWw4j5BAr";
+  var secret_key = "";
   var computedHash = CryptoJS.HmacMD5(uri, secret_key);
   var computedHashString = computedHash.toString(CryptoJS.enc.Base64); 
 
@@ -113,7 +113,7 @@ var additionalParams = {
 };
 
 var apigClient = apigClientFactory.newClient({
-  apiKey: 'v6yONPje7AdEv9jui3Fu35uPMHuuFww419uYp39a'
+  apiKey: ''
 });
 
 function submitSymptom() {
@@ -156,8 +156,6 @@ $('document').ready(function() {
         // This is where you define the body of the request,
             "userMessage": $('#userMsg').val()
         };
-        console.log("yahannn");
-        console.log(body);
         apigClient.chatbotPost(params, body, additionalParams)
             .then(function(data){
                 resp = JSON.parse(data['data']['body']);
