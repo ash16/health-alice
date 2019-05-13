@@ -5,11 +5,11 @@ p { margin: 1em 0; }
 
 /* main */
 header {
-    height: 360px;
+    /* height: 360px; */
     z-index: 10;
 }
 .header-banner {
-    background-color: #333;
+    background-color: #25A3FF;
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -17,7 +17,7 @@ header {
 }
 
 header h1 {
-    background-color: rgba(18,72,120, 0.8);
+    background-color: #25A3FF;
     color: #fff;
     padding: 0 1rem;
     position: absolute;
@@ -32,22 +32,36 @@ header h1 {
     width: 100%; 
 }
 
+.content-container {
+    padding-top: 10px;
+    max-width: 100%;
+} 
+
+.site-title {
+    color: black;
+    text-align: center;
+    font-family: sans-serif;
+    padding-left: 1px;
+    font-variant: all-small-caps;
+    font-size: 28px;
+}
+
 nav {
     width: 100%;
     height: 60px;
-    background: #292f36;
+    background: #25A3FF;
     postion: fixed;
     z-index: 10;
 }
 
 nav div {
-    color: white;
+    color: black;
     font-size: 2rem;
     line-height: 60px;
     position: absolute;
     top: 0;
     left: 2%;
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 .visible-title {
     visibility: visible;
@@ -67,7 +81,7 @@ nav ul li {
 }
 nav ul li a {
     text-decoration: none; 
-    color: #a9abae;
+    color: black;
 }
 
 /* demo content */
@@ -76,6 +90,12 @@ body {
     font-family: helvetica;
     line-height: 1.6;
 }
+
+.chat-view {
+    width: 40%;
+    float: right;
+}
+
 .content{ 
     margin: 0 auto;
     padding: 4rem 0;
@@ -115,3 +135,5 @@ p img {
         width: 100%;
     }
 }
+
+
