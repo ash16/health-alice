@@ -13,14 +13,6 @@
     border-radius: 15px;
 }
 
-.name {
-    font-size: 22 px;
-}
-
-.details {
-    font-size: 15 px sans-serif;
-}
-
 .chatlog {
     font: 15px arial, sans-serif;
 }
@@ -37,7 +29,6 @@
   }
   
   #doctors-list td, #doctors-list th {
-    border: 1px solid #ddd;
     padding: 12px;
   }
   
