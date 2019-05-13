@@ -7,6 +7,7 @@ p { margin: 1em 0; }
 header {
     /* height: 360px; */
     z-index: 10;
+    margin-bottom: 50px;
 }
 .header-banner {
     background-color: #25A3FF;

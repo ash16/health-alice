@@ -16,9 +16,9 @@ function fillDoctorDetails(inputJson) {
         val1.classList.add('name');
 
         var elem = inputJson[i];
-        var name = '<a href=# id='+i+'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
+        var name = '<a style="color:black" href=# id='+i+'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
         
-        var specialization = '<span style="font-size:15px">';
+        var specialization = '<span style="font-size:15px; font-style:italic">';
         for (var j = 0; j < elem['specialization'].length; j++) {
             specialization = specialization + elem['specialization'][j] + ", ";
         }
