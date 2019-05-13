@@ -84,10 +84,15 @@ function init() {
       str = str.replace(new RegExp('ID','g'), 'id');
       my_data = JSON.parse(str);
       var test = $('#test');
+      var test2 = $('#test2');
       $(test).select2({
-          data:my_data.slice(1,10),
+          data:my_data,
+          multiple: true
+      });
+      $(test2).select2({
+          data:my_data,
           multiple: true,
-          width: "300px"
+          'background-color': '#4bc970'
       });
   
     };

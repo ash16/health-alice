@@ -119,3 +119,10 @@ h1 {
 .wrong #inputProgress {
   border-color: #ff2d26;
 }
+
+
+.select2{
+  padding-top: 29px;
+  padding-bottom: 10px;
+  width: -webkit-fill-available;
+}

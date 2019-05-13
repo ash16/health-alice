@@ -1,3 +1,37 @@
+var specialization = [
+  "General practice",
+  "Orthopedics",
+  "Gastroenterology",
+  "Internal medicine",
+  "Nephrology",
+  "Urology",
+  "Surgery",
+  "Rheumatology",
+  "Dermatology",
+  "Pulmonology",
+  "Ophthalmology",
+  "Allergology",
+  "Psychiatry",
+  "Geriatric medicine",
+  "Cardiology",
+  "Endocrinology"
+]
+
+var test = $('#test');
+      $(test).select2({
+          data:specialization,
+          multiple: true,
+          width: 500
+      });
+
+var doctor_selections = null;
+$(test).change(function() {
+  doctor_selections = ( JSON.stringify($(test).select2('data')) );
+    console.log('Selected options: ' + doctor_selections);
+    $('#selectedText').text(doctor_selections);
+    console.log(doctor_selections);
+});
+
 var question = ["Are you a doctor?"]
 
 var common_questions = [
@@ -45,6 +79,15 @@ var patient_questions = common_questions.concat([
     inputField.focus()
     showCurrent()
   }
+
+  specialty_submit.addEventListener('click', function(e) {
+    
+    if(doctor_selections){
+      document.getElementById('specialty').setAttribute("style", "display: none");
+      document.getElementById('specialty_submit').setAttribute("style", "display: none");
+      validate();
+    }
+  })
 
   doctor_patient_submit.addEventListener('click', function(e) {
     //transform(0, 0)
@@ -106,6 +149,13 @@ var patient_questions = common_questions.concat([
       document.getElementById('gender').setAttribute("style", "display: block");
       document.getElementById('gender_submit').setAttribute("style", "display: block");
     }
+    if (position === 2 && isDoctor) {
+      document.getElementById('inputField').setAttribute("style", "display: none");
+      document.getElementById('inputProgress').setAttribute("style", "display: none");
+      document.getElementById('specialty').setAttribute("style", "display: block");
+      document.getElementById('specialty_submit').setAttribute("style", "display: block");
+
+    }
     else if (position == 7 && !isDoctor) {
       document.getElementById('inputField').setAttribute("style", "display: none");
       document.getElementById('inputProgress').setAttribute("style", "display: none");
@@ -145,6 +195,7 @@ var patient_questions = common_questions.concat([
       answers_map["familyDiseaseHistory"] = answers[8];
       answers_map["emergencyContact"] = answers[9];
     }
+    connsole.log("")
     console.log(answers_map);
     // remove the box if there is no next question
     register.className = 'close'
@@ -164,7 +215,7 @@ var patient_questions = common_questions.concat([
     userExists = 0;
     Http.onreadystatechange=(e)=>{
       console.log(Http);
-      window.location.replace("index.html#id_token=" + window.sessionStorage.getItem("token"));
+      //window.location.replace("index.html#id_token=" + window.sessionStorage.getItem("token"));
     }
   }
 
@@ -181,6 +232,14 @@ var patient_questions = common_questions.concat([
       answers[position] = diseases;
       position += 1;
     } 
+    else if (position == 2 && isDoctor){
+      var temp = [];
+      data = JSON.parse(doctor_selections);
+      for (var row in data){
+        temp.push(data[row]['text']);
+      }
+      answers[position] = temp;
+    }
     else if (position === 5){
       if (document.getElementById('Gender_Male').checked) answers[position] = 'male';
       else answers[position] = 'female';
