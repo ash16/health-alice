@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <link rel='stylesheet' href="header.css">
+    <script type="text/javascript" src="message.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link href="css/message.css" type="text/css" rel="stylesheet">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Alice HealthService</title>
+        <header>
+            <div class="clear"></div>
+            <nav>
+                <div class="site-title"><p>Alice Health Service</p></div>
+                <!-- <ul>
+                    <li><a href="/archive">My Messages</a></li>
+                    <li><a href="/events">Profile</a></li>
+                    <li><a href="/contact">About</a></li>
+                <ul> -->
+            </nav>
+        </header>
+    </head>
+
+    <body onload="fillDoctorDetails(doctorsInfo)">
+        <div class="content-container">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4" id="doctor-details">
+                    <table id="doctors-list">
+                        <tr>
+                            <th>Doctors</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5" id="conversation">
+                    <div id='chatborder'>
+                        <p id="chatlog11" class="chatlog">&nbsp;</p>
+                        <p id="chatlog10" class="chatlog">&nbsp;</p>
+                        <p id="chatlog9" class="chatlog">&nbsp;</p>
+                        <p id="chatlog8" class="chatlog">&nbsp;</p>
+                        <p id="chatlog7" class="chatlog">&nbsp;</p>
+                        <p id="chatlog6" class="chatlog">&nbsp;</p>
+                        <p id="chatlog5" class="chatlog">&nbsp;</p>
+                        <p id="chatlog4" class="chatlog">&nbsp;</p>
+                        <p id="chatlog3" class="chatlog">&nbsp;</p>
+                        <p id="chatlog2" class="chatlog">&nbsp;</p>
+                        <p id="chatlog1" class="chatlog">&nbsp;</p>
+                        <input type="text" name="chat" id="chatbox" placeholder="Hi there! How can I help you." onfocus="placeHolder()">
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        var doctorsInfo = [
+            {
+                firstName: 'Prashant',
+                lastName: 'Kumar',
+                specialization: ['Physician', 'Cardiologist', 'Cardiovascular surgeon'],
+                id: '1'
+            },
+            {
+                firstName: 'Shreya',
+                lastName: 'Agarwal',
+                specialization: ['Physician', 'Adolescent medicine specialist'],
+                id: '2'
+            },
+            {
+                firstName: 'Rishi',
+                lastName: 'Verma',
+                specialization: ['Physician', 'Gynecologist', 'Anesthesiologist'],
+                id: '3'
+            }
+        ];
+
+    </script>
+
+</html>

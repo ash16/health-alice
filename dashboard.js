@@ -1,4 +1,4 @@
-const REGION = "us-west-2";
+const REGION = "us-east-1";
 var medical_api_token = "";
 
 $(window).scroll(function(){
@@ -63,7 +63,7 @@ my_data = []
 function init() {
   var uri = "https://authservice.priaid.ch/login";
   var api_key = "n3A9J_GMAIL_COM_AUT";
-  var secret_key = "";
+  var secret_key = "Ft3q8C2MyWw4j5BAr";
   var computedHash = CryptoJS.HmacMD5(uri, secret_key);
   var computedHashString = computedHash.toString(CryptoJS.enc.Base64); 
 
@@ -87,15 +87,17 @@ function init() {
       var test2 = $('#test2');
       $(test).select2({
           data:my_data,
+          placeholder: 'Select from the list of options',
           multiple: true
       });
       $(test2).select2({
           data:my_data,
-          multiple: true,
-          'background-color': '#4bc970'
+          placeholder: 'Select from the list of options',
+          multiple: true
       });
-  
     };
+    //document.getElementById('test').setAttribute('style', 'background: #4bc970');
+    //document.getElementById('test2').setAttribute('style', 'background: #4bc970');
   }; 
 
 };
@@ -118,7 +120,7 @@ var additionalParams = {
 };
 
 var apigClient = apigClientFactory.newClient({
-  apiKey: ''
+  apiKey: 'v6yONPje7AdEv9jui3Fu35uPMHuuFww419uYp39a'
 });
 
 function submitSymptom() {
