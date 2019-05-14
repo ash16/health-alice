@@ -195,7 +195,6 @@ var patient_questions = common_questions.concat([
       answers_map["familyDiseaseHistory"] = answers[8];
       answers_map["emergencyContact"] = answers[9];
     }
-    connsole.log("")
     console.log(answers_map);
     // remove the box if there is no next question
     register.className = 'close'

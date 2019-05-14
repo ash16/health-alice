@@ -36,6 +36,8 @@ og_token = getParameterByName('id_token');
 token = parseJwt(og_token);
 console.log(token);
 var response = null;
+window.sessionStorage.setItem("token", og_token);
+window.sessionStorage.setItem("username", token['email']);
 
 const Http = new XMLHttpRequest();
 const url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/user?userid='+token['email'];
@@ -43,16 +45,17 @@ Http.open("GET", url);
 Http.send();
 console.log(token['email']);
 Http.onreadystatechange=(e)=>{
+  console.log(Http);
+  if(Http.readyState == 4){
     response = Http.responseText;
-    if(response.size==0) {
+    if(!response) {
       console.log('Empty');
-        window.sessionStorage.setItem("token", og_token);
-        window.sessionStorage.setItem("username", token['email'])
-            window.location.replace("register.html#id_token=" + og_token);
+      window.location.replace("register.html#id_token=" + og_token);
     }else {
         console.log(response);
         response = JSON.parse(response);
     }
+  }
 }
 
 var params = {
