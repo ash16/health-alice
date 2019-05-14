@@ -21,6 +21,7 @@
 	<script src="http://authservice.priaid.ch/js/hmac-md5.js"></script>
 	<script src="http://authservice.priaid.ch/js/enc-base64-min.js"></script>
 	<link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="file.js"></script>
  	<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,20 +30,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Alice HealthService</title>
     <head>
-	<header style="position: sticky;top: 0;">
-	    <div class="clear"></div>
-	    <nav>
-	        <div class="site-title"><p>Alice Health Service</p></div>
-	        <ul>
-	            <li><a href="/archive">My Messages</a></li>
-	            <li><a href="/events">Profile</a></li>
-	            <li><a href="/contact">About</a></li>
-	        <ul>
-	    </nav>
-	
-	</header>
-</head>
-	<body onload="fillDiagnosis();fillDoctorDetails();"> 
+        <header style="position: sticky;top: 0;">
+            <div class="clear"></div>
+            <nav>
+                <div class="site-title"><p>Alice Health Service</p></div>
+                <ul>
+                    <li><a href="/archive">My Messages</a></li>
+                    <li><a href="/events">Profile</a></li>
+                    <li><a href="/contact">About</a></li>
+                <ul>
+            </nav>
+        
+        </header>
+    </head>
+	<body onload="fillDiagnosis();fillDoctorDetails();check();"> 
 		<div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-4" id="doctor-details">
@@ -63,6 +64,5 @@
 
     	</div>
     </body>
-</body>
 <script type="text/javascript" src="doctorResponse.js"></script>
 </html>
