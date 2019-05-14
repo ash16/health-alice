@@ -23,7 +23,7 @@ Http7.onreadystatechange=(e)=>{
   console.log(Http);
   if(Http7.readyState == 4){
     self_details = Http7.responseText;
-    if(!self_details || self_details === "[]") {
+    if(!self_details || self_details === "") {
       console.log('Empty');
       window.location.replace("register.html#id_token=" + og_token);
     }else {
@@ -164,6 +164,12 @@ function keyPress(e) {
 }
 
 function populateConversation(conversation) {
+    var newChatDialog = document.createElement('div');
+    newChatDialog.id = 'chat';
+    newChatDialog.appendChild(getHelperChatMessageInput());
+
+    var currChatDialog = document.getElementById('chat');
+    currChatDialog.replaceWith(newChatDialog);
     messages = [];
     for (var i in conversation) {
         console.log(conversation[i]);
@@ -174,6 +180,15 @@ function populateConversation(conversation) {
     }
 
     for (currMsg in messages) displayMessage(messages[currMsg]);
+}
+
+function getHelperChatMessageInput() {
+    var input = document.createElement('input');
+    input.setAttribute("type", "text");
+    input.setAttribute("name", "chat");
+    input.id = "chatbox";
+    input.setAttribute("placeholder", "Hi there! How can I help you?");
+    return input;
 }
 
 function getAllMessages() {
