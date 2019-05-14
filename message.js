@@ -1,17 +1,36 @@
 var userIds = [];
+var currId = "";
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    console.log(url, name);
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[#&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+if (getParameterByName("otherid")) {
+    currId = getParameterByName("otherId");
+}
+
+var isDoctor = false;
 
 function fillUserDetails(inputJson) {
+    console.log("hi");
     var title = document.getElementById('userTitle');
     title.innerHTML = "User";
     var num = inputJson.length;
     doctors = document.getElementById('doctors-list');
+    console.log("Number of users:", num);
     if (num === 0) {
         var row = doctors.insertRow(-1);
         var cell1 = row.insertCell(0);
         cell1.innerHTML = "No data available";
         return;
     }
-    var isDoctor = false;
 
     for (var counter = 0; counter < num; counter++) {
         var row = doctors.insertRow(-1);
@@ -24,7 +43,9 @@ function fillUserDetails(inputJson) {
         userIds.push(inputJson[counter]['id']);
 
         var elem = inputJson[counter];
-        var name = '<a style="color:black" href=# id='+ counter +'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
+        var currElemId = inputJson[counter]['id'];
+        var name = '<a style="color:black" href=# class="userDetails" id='+ currElemId +'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
+        name = name + '<script> document.getElementById("' + currElemId + '").addEventListener("click", function(){console.log("joo")}); </script>'; 
         
         var specialization = "";
         if ((elem['specialization'] != undefined) && (elem['specialization'].length > 0)) {
@@ -62,9 +83,8 @@ Http.onreadystatechange=(e)=>{
     }
 }
 
-var userId = window.sessionStorage["username"];
 var url2 = "wss://7bny2h0qhf.execute-api.us-east-1.amazonaws.com/test?userid=";
-url2 = url2 + userId;
+url2 = url2 + selfId;
 var webSocket = new WebSocket(url2);
 webSocket.onopen = function (event) {
     if (messages.length > 0) {
@@ -72,8 +92,6 @@ webSocket.onopen = function (event) {
         //message['message'] = "Here's some text that the server is urgently awaiting!";
     }
 };
-
-var curr_id = "";
 
 webSocket.onmessage = function (event) {
     console.log(event.data);
@@ -113,6 +131,35 @@ function keyPress(e) {
     }
 }
 
+function populateConversation(conversation) {
+    messages = [];
+    for (currMsg in conversation) {
+        var sentBy = currMsg.split('|||')[0];
+        var txt = currMsg.split('|||')[1];
+        messages.push({"id": sentBy, "message": txt});
+    }
+
+    for (currMsg in messages) displayMessage();
+}
+
+function getAllMessages() {
+    const Http5 = new XMLHttpRequest();
+    doc_flag = "0";
+    if(isDoctor){
+        doc_flag = "1"
+    }
+
+    var url5='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?userid=' + selfId + '&otherid=' + currId + '&isdoctor=' + doc_flag;
+    Http5.open("POST", url5);
+    Http5.send();
+    Http5.onreadystatechange=(e)=>{
+        if (Http5.responseText.length > 0 && Http5.readyState === 4) {
+            var conversations = JSON.parse(Http5.responseText);
+            populateConversation(conversations);
+        }
+    }
+}
+
 function displayMessage() {
     var chatElem = document.createElement('p');
     var currId = "chatlog" + messages.length;
@@ -139,3 +186,11 @@ function myResponseUtil() {
         document.getElementById("chatbox").value = "";
     }
 }
+
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.className === 'userDetails') {
+        var requiredId = e.target.id;
+        currId = requiredId;
+        getAllMessages();
+    }
+});
