@@ -48,25 +48,31 @@ function chatbotResponse() {
     chatbotResponseUtil();
 }
 
+function displayMessage(messages) {
+    var chatElem = document.createElement('p');
+    var currId = "chatlog" + messages.length;
+    chatElem.id = currId;
+    var currMessage = messages[messages.length-1];
+    if (currMessage.startsWith("<b>Doctor</b>")) {
+        chatElem.setAttribute("style", "display:block; margin-left:70px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:15px");
+    } else {
+        chatElem.setAttribute("style", "display:block; margin-right:70px; background-color:#4bc970; border-radius:3px; padding:15px");
+    }
+    chatElem.innerHTML = currMessage;
+    var conversation = document.getElementById('chat');
+    conversation.insertBefore(chatElem, conversation.children[conversation.childElementCount-1]);
+    document.getElementById("chatbox").value = "";
+}
+
 function chatbotResponseUtil() {
     if (document.getElementById("chatbox").value !== "") {
         lastUserMessage = document.getElementById("chatbox").value;
         messages.push(lastUserMessage);
+        displayMessage(messages);
         document.getElementById("chatbox").value = "";
-    }	
-    var messageReply = "Doctor's reply here";
-    messages.push("<b>Doctor</b>: " + messageReply);
-    for (var i = 1; i < 8; i++) {
-        if (messages[messages.length - i]) {
-            var currId = "chatlog" + i;
-            var chatElem = document.getElementById(currId);
-            var currMessage = messages[messages.length - i];
-            if (currMessage.startsWith("<b>Doctor</b>")) {
-                chatElem.setAttribute("style", "display:block; margin-left:70px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:15px");
-            } else {
-                chatElem.setAttribute("style", "display:block; margin-right:70px; background-color:#4bc970; border-radius:3px; padding:15px");
-            }
-            chatElem.innerHTML = currMessage;
-        }
+
+        var messageReply = "Doctor's reply here";
+        messages.push("<b>Doctor</b>: " + messageReply);
+        displayMessage(messages);
     }
 }
