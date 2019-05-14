@@ -68,6 +68,7 @@ var params = {
 my_data = []
 
 function init() {
+  alert('Hello! Welcome to the Alice Health Service! You can fill the form on the right with symptoms. If you need further assistance AliceBot is available to talk with you!');
   var uri = "https://authservice.priaid.ch/login";
   var api_key = "b5WGs_GMAIL_COM_AUT";
   var secret_key = "m2R4PxEp56StLw37W";
@@ -193,7 +194,8 @@ function sendMessage(e) {
         $("#m_his").append(a); 
         console.log(resp['message']);
         if(resp['message'] === "Please provide your symptoms  below : ") {
-          b = '<div><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div><div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button></div>';
+          b = '<a href = "#" onclick="submitSymptom()">Click me when done!</a>'
+          b = b + '<div class="content-container row"><div class="col-md-1"></div><div class="col-md-7"><select id="test" style="display: inline-block;position: relative;left-margin: 2" ></select></div><div class="col-md-1"></div><div class="col-md-1" style="right-margin:0;bottom-margin:0;"></div></div>';
           b =b + '<script>var test = $(\'#test\');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});';
           b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});';
           $("#m_his").append(b);

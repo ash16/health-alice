@@ -33,26 +33,6 @@ header h1 {
     left: 2rem;
 }
 
-.fixed-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%; 
-}
-
-.content-container {
-    padding-top: 10px;
-    max-width: 100%;
-} 
-
-.site-title {
-    color: black;
-    text-align: center;
-    font-family: sans-serif;
-    padding-left: 1px;
-    font-variant: all-small-caps;
-    font-size: 28px;
-}
 
 nav {
     width: 100%;
@@ -86,6 +66,7 @@ nav ul {
     text-align: right;
     max-width: 100%;
 }
+
 nav ul li { 
     display: inline-block; 
     line-height: 60px;

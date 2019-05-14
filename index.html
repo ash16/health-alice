@@ -45,12 +45,6 @@
 	</header>
 </head>
 <body onload="check()">
-	<div class="content-container row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
-			<p>Hello! Welcome to the <b>Alice Health Service</b>! You can fill the form on the right with symptoms. If you need further assistance AliceBot is available to talk with you! </p>
-		</div>
-	</div>
 	<div id='main' class="content-container row">
 		<div class="col-md-1"></div>
 		<div class="col-md-4 chat-view">
@@ -71,7 +65,7 @@
 							</div>
 							<div class="type_msg">
 								<div class="input_msg_write">
-									<input type="text" class="write_msg" id="userMsg" placeholder="Type a message" />
+									<input type="text" class="write_msg" id="userMsg" style="position: sticky;top: 100;"placeholder="Type a message" />
 									<button class="msg_send_btn" id = "msg_send" type="button" style="display: none"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
 								</div>
 							</div>
@@ -95,7 +89,7 @@
 					<input type="textarea" id="password" name="user_password"  style="margin-bottom: 20px">
 					
 				</fieldset>
-				<button onclick="submitSymptom()">Submit results</button>
+				<button onclick="submitSymptom()">Submit symptoms.</button>
 			</form>
 		</div>
 	</div>  

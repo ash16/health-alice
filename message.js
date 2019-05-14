@@ -25,7 +25,7 @@ function fillUserDetails(inputJson) {
 
         var elem = inputJson[counter];
         var name = '<a style="color:black" href=# id='+ counter +'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
-        
+        name = name + '<script> document.getElementById("' + counter + '".addEventListener("click", function(){console.log("joo")}); </script>'; 
         var specialization = "";
         if ((elem['specialization'] != undefined) && (elem['specialization'].length > 0)) {
             specialization = '<span style="font-size:15px; font-style:italic">';
