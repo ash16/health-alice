@@ -30,3 +30,43 @@ function fillDoctorDetails(inputJson) {
         row.appendChild(cell1);
     }
 }
+
+var messages = [];
+var lastMessage = "";
+
+document.onkeypress = keyPress;
+
+//if the key pressed is 'enter' runs the function newEntry()
+function keyPress(e) {
+    var key = e.keyCode;
+    if (key === 13) {
+        chatbotResponse();
+    }
+}
+
+function chatbotResponse() {
+    chatbotResponseUtil();
+}
+
+function chatbotResponseUtil() {
+    if (document.getElementById("chatbox").value !== "") {
+        lastUserMessage = document.getElementById("chatbox").value;
+        messages.push(lastUserMessage);
+        document.getElementById("chatbox").value = "";
+    }	
+    var messageReply = "Doctor's reply here";
+    messages.push("<b>Doctor</b>: " + messageReply);
+    for (var i = 1; i < 8; i++) {
+        if (messages[messages.length - i]) {
+            var currId = "chatlog" + i;
+            var chatElem = document.getElementById(currId);
+            var currMessage = messages[messages.length - i];
+            if (currMessage.startsWith("<b>Doctor</b>")) {
+                chatElem.setAttribute("style", "margin-left:60px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:5px");
+            } else {
+                chatElem.setAttribute("style", "margin-right:60px; background-color:#d5e0e2;border:1px solid #ccc7c7; border-radius:3px; padding:5px");
+            }
+            chatElem.innerHTML = currMessage;
+        }
+    }
+}

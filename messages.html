@@ -7,6 +7,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
     <link href="css/message.css" type="text/css" rel="stylesheet">
+    <!-- <link href="css/style.css" type="text/css" rel="stylesheet"> -->
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+	<script type="text/javascript" src="apiGateway-js-sdk/apigClient.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+	<script src="http://authservice.priaid.ch/js/hmac-md5.js"></script>
+	<script src="http://authservice.priaid.ch/js/enc-base64-min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 
     <head>
         <meta charset="utf-8">
@@ -55,7 +72,18 @@
                                     </div>
                                     <div class="type_msg">
                                         <div class="input_msg_write">
-                                            <input type="text" class="write_msg" id="userMsg" placeholder="Type a message" />
+                                            <p id="chatlog11" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog10" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog9" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog8" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog7" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog6" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog5" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog4" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog3" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog2" class="chatlog">&nbsp;</p>
+                                            <p id="chatlog1" class="chatlog">&nbsp;</p>
+                                            <input type="text" class="write_msg" id="chatbox" placeholder="Type a message" />
                                         </div>
                                     </div>
                                     <!-- <div>

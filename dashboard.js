@@ -154,29 +154,33 @@ $(test).change(function() {
     $('#selectedText').text(selections);
 });
 
+function sendMessage(e) {
+  e.preventDefault();
+  var a = $("<div class='outgoing_msg'><div class='sent_msg'><p>" + $('#userMsg').val() + "</p></div></div>");
+  $("#m_his").append(a);
+  body = {
+  // This is where you define the body of the request,
+      "userMessage": $('#userMsg').val()
+  };
+  apigClient.chatbotPost(params, body, additionalParams)
+    .then(function(data){
+        resp = JSON.parse(data['data']['body']);
+        // Add success callback code here.
+        $("#userMsg").val("");
+        var a = $("<div class='incoming_msg'><div class='incoming_msg_img'><img src='img/icon.jpg'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
+        $("#m_his").append(a);    
+
+        //console.log(data["data"]["response"]);
+
+        // $('#botResponse').val(data["data"]["response"]);
+    }).catch( function(result){
+        // Add error callback code here.
+        console.log(result);
+    });
+}
+
 $('document').ready(function() {
     $('#msg_send').click(function(e) {
-        e.preventDefault();
-        var a = $("<div class='outgoing_msg'><div class='sent_msg'><p>" + $('#userMsg').val() + "</p></div></div>");
-        $("#m_his").append(a);
-        body = {
-        // This is where you define the body of the request,
-            "userMessage": $('#userMsg').val()
-        };
-        apigClient.chatbotPost(params, body, additionalParams)
-            .then(function(data){
-                resp = JSON.parse(data['data']['body']);
-                // Add success callback code here.
-                $("#userMsg").val("");
-                var a = $("<div class='incoming_msg'><div class='incoming_msg_img'><img src='img/icon.jpg'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
-                $("#m_his").append(a);    
-
-                //console.log(data["data"]["response"]);
-
-                // $('#botResponse').val(data["data"]["response"]);
-            }).catch( function(result){
-                // Add error callback code here.
-                console.log(result);
-            });
+        sendMessage(e);
     });
 }); 
