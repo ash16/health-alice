@@ -61,6 +61,9 @@ Http.onreadystatechange=(e)=>{
     }else {
         console.log(response);
         response = JSON.parse(response);
+        if(response['isDoctor']) {
+          window.location.replace("messages.html#id_token=" + og_token);
+        }
     }
   }
 }
