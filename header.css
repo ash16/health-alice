@@ -60,6 +60,10 @@ nav {
     background: #25A3FF;
     postion: fixed;
     z-index: 10;
+    top:0;
+    width:100%;
+    z-index:100;
+
 }
 
 nav div {

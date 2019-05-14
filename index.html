@@ -31,7 +31,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Alice HealthService</title>
-	<header>
+	<header style="position: sticky;top: 0;">
 	    <div class="clear"></div>
 	    <nav>
 	        <div class="site-title"><p>Alice Health Service</p></div>
@@ -45,11 +45,15 @@
 	</header>
 </head>
 <body onload="check()">
-	<div></div>
-	<div></div>
-	<div></div>
-	<div id='main' class="content-container">
-		<div class="chat-view">
+	<div class="content-container row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<p>Hello! Welcome to the <b>Alice Health Service</b>! You can fill the form on the right with symptoms. If you need further assistance AliceBot is available to talk with you! </p>
+		</div>
+	</div>
+	<div id='main' class="content-container row">
+		<div class="col-md-1"></div>
+		<div class="col-md-4 chat-view">
 			<h3 class=" text-center">Alice Health Bot</h3>
 			<div class="messaging">
 				<div class="inbox_msg">
@@ -76,12 +80,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-view">
+		<div class="col-md-1"></div>
+		<div class="col-md-4 form-view">
 			<form>
-				
 				<fieldset>
-
-					<h5>Hi, please fill this form with symptoms or use the Alice Chatbot!</h5>
  					<label style="margin-top: 30px" for="symptoms">Symptoms:</label>
 					<select id="test2" style="display: block;position: relative;right: 0"  style="margin-bottom: 20px"></select>
 					<label></label>
