@@ -48,7 +48,7 @@ Http.onreadystatechange=(e)=>{
   console.log(Http);
   if(Http.readyState == 4){
     response = Http.responseText;
-    if(!response || response.size==0) {
+    if(!response || response === "[]") {
       console.log('Empty');
       window.location.replace("register.html#id_token=" + og_token);
     }else {
