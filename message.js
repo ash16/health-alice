@@ -136,6 +136,7 @@ webSocket.onmessage = function (event) {
         var curr_message = details[1];
         messages.push({"id": curr_id, "message": curr_message});
         displayMessage();
+        text_to_speeh(curr_message);
     }
 };
 
@@ -232,7 +233,11 @@ recognition.addEventListener("result", e => {
     console.log("stopped");
   });
   
-  recognition.addEventListener("end", recognition.start());
+recognition.addEventListener("end", recognition.start());
+
+function text_to_speeh(m) {
+    responsiveVoice.speak(m);
+}
 
 function getAllMessages() {
     const Http5 = new XMLHttpRequest();
