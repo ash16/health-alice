@@ -214,7 +214,7 @@ var patient_questions = common_questions.concat([
     userExists = 0;
     Http.onreadystatechange=(e)=>{
       console.log(Http);
-      //window.location.replace("index.html#id_token=" + window.sessionStorage.getItem("token"));
+      window.location.replace("index.html#id_token=" + window.sessionStorage.getItem("token"));
     }
   }
 
