@@ -172,7 +172,8 @@ function submitSymptom() {
       userData : response
     };
     //Now redirect to doctorResults.html
-    window.location = "doctorResults.html?response=" + btoa(JSON.stringify(dat))+"#id_token=" + og_token;
+    var newurl = "doctorResults.html?response=" + btoa(JSON.stringify(dat))+"#id_token=" + og_token;
+    window.location = newurl;
   };
 
 };
@@ -202,7 +203,7 @@ function sendMessage(e) {
         console.log(resp['message']);
         if(resp['message'] === "Please provide your symptoms  below : ") {
           b = '<a href = "#" onclick="submitSymptom()">Click me when done!</a>'
-          b = b + '<div class="content-container row"><div class="col-md-1"></div><div class="col-md-7"><select id="test" style="display: inline-block;position: relative;left-margin: 2" ></select></div><div class="col-md-1"></div><div class="col-md-1" style="right-margin:0;bottom-margin:0;"></div></div>';
+          b = b + '<div class="content-container row"><div><select id="test" style="display: inline-block;position: relative;left-margin: 2" ></select></div></div>';
           b =b + '<script>var test = $(\'#test\');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});';
           b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});';
           $("#m_his").append(b);

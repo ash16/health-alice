@@ -70,10 +70,11 @@
     background-color: #323232;
     color: white;
   }
-  
+
   #doctors-list tr:nth-child(even){background-color: #f2f2f2;}
+
   
-  #doctors-list tr:hover {background-color: #ddd;}
+  #doctors-list tr:hover {background-color: #4bc970;}
   
   #doctors-list th {
     padding-top: 12px;
@@ -85,5 +86,3 @@
   body {
   background-color: #e4e1d7 !important;
 }
-
-

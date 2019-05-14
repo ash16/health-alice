@@ -141,6 +141,9 @@ webSocket.onmessage = function (event) {
 
 function sendMessage() {
     var currMessage = selfId + "|||" + messages[messages.length-1]['message'];
+    if(messages.length>2 && messages[messages.length-1]['message']===messages[messages.length-2]['message']) {
+        return;
+    }
     var userMessage = {
         "action" : "onMessage",
         "receiver_id": currId,
