@@ -35,6 +35,11 @@ function parseJwt (token) {
 og_token = getParameterByName('id_token');
 token = parseJwt(og_token);
 console.log(token);
+
+function redir(argument) {
+      window.location.replace("messages.html#id_token=" + og_token);
+}
+
 var response = null;
 window.sessionStorage.setItem("token", og_token);
 window.sessionStorage.setItem("username", token['email']);
@@ -68,7 +73,6 @@ var params = {
 my_data = []
 
 function init() {
-  alert('Hello! Welcome to the Alice Health Service! You can fill the form on the right with symptoms. If you need further assistance AliceBot is available to talk with you!');
   var uri = "https://authservice.priaid.ch/login";
   var api_key = "b5WGs_GMAIL_COM_AUT";
   var secret_key = "m2R4PxEp56StLw37W";
@@ -190,7 +194,7 @@ function sendMessage(e) {
         resp = JSON.parse(data['data']['body']);
         // Add success callback code here.
         $("#userMsg").val("");
-        var a = $("<div class='incoming_msg'><div class='incoming_msg_img'><img src='img/icon.jpg'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
+        var a = $("<div class='incoming_msg'><div class='incoming_msg_img'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
         $("#m_his").append(a); 
         console.log(resp['message']);
         if(resp['message'] === "Please provide your symptoms  below : ") {
@@ -219,9 +223,6 @@ input.addEventListener("keyup", function(event) {
     document.getElementById("msg_send").click();
   }
 });
-
-
-
 
 
 $('document').ready(function() {

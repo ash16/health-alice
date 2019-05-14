@@ -53,12 +53,12 @@ img{ max-width:100%;}
   font-size: 21px;
   margin: auto;
 }
-.srch_bar input{ border:1px solid #A0CBD6; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:#A0CBD6;}
+.srch_bar input{ border:1px solid #ebebeb; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:#A0CBD6;}
 .srch_bar .input-group-addon button {
 /*  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 */  border: medium none;
   padding: 0;
-  color: #A0CBD6;
+  color: #ebebeb;
   font-size: 18px;
 }
 .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
@@ -88,15 +88,21 @@ img{ max-width:100%;}
 
 .incoming_msg_img {
   display: inline-block;
+  border-radius: 5px;
   width: 6%;
 }
 .received_msg {
+  background-color:#7f7777;
+  border-radius: 5px;
+  color: white;
   display: inline-block;
-  padding: 0 0 0 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   vertical-align: top;
   width: 92%;
  }
- .received_withd_msg p {
+/* .received_withd_msg p {
   background: #ebebeb none repeat scroll 0 0;
   border-radius: 3px;
   color: #646464;
@@ -105,24 +111,25 @@ img{ max-width:100%;}
   padding: 5px 10px 5px 12px;
   width: 100%;
 }
-.time_date {
+*/.time_date {
   color: #747474;
   display: block;
   font-size: 12px;
   margin: 8px 0 0;
 }
-.received_withd_msg { width: 57%;}
-.mesgs {
+/*.received_withd_msg { width: 57%;}
+*/.mesgs {
   float: left;
   padding: 30px 15px 0 25px;
   width: 100%;
 }
 
  .sent_msg p {
-  background: #A0CBD6 none repeat scroll 0 0;
+  background: #dadfe0 none repeat scroll 0 0;
   border-radius: 3px;
   font-size: 14px;
-  margin: 0; color:#fff;
+  color: black;
+  margin: 0;
   padding: 5px 10px 5px 12px;
   width:100%;
 }
@@ -145,9 +152,9 @@ img{ max-width:100%;}
   background-color: #e8eeef;
 }
 
-.type_msg {margin-top: 16px; border-top: 1px solid #A0CBD6;position: relative;}
+.type_msg {margin-top: 16px; border-top: 1px solid #ebebeb;position: relative;}
 .msg_send_btn {
-  background: #A0CBD6 none repeat scroll 0 0;
+  background: #ebebeb none repeat scroll 0 0;
   border: medium none;
   border-radius: 50%;
   color: #fff;
@@ -171,9 +178,16 @@ img{ max-width:100%;}
   top: 60px;
   width: 33px;
 }
-
+#sb {
+background: #000000 none repeat scroll 0 0;
+color: white;
+}
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
   height: 516px;
   overflow-y: inherit;
+}
+
+body {
+  background-color: #e4e1d7 !important;
 }

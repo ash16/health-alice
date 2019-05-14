@@ -87,7 +87,7 @@ function fillDoctorDetails() {
         }
         if (specialization.length > 2) specialization = specialization.substr(0, specialization.length - 2);
         specialization = specialization + '</span>';
-        var contact = "<a href='messages.html?userid=" + userDat['email']+"&otherid=" + elem['id']+"isDoctor=false#id_token" + getParameterByName('id_token','#') + "'>Contact now.</a>";
+        var contact = "<a href='messages.html?userid=" + userDat['email']+"&otherid=" + elem['id']+"&isDoctor=false#id_token" + getParameterByName('id_token','#') + "'>Contact now.</a>";
         var curr_doctor = name + '<br>' + specialization + '<br>' + contact ;
 
         val1.innerHTML = curr_doctor;

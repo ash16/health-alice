@@ -1,5 +1,39 @@
 var userIds = [];
 var currId = "";
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = decodeURIComponent(atob(base64Url).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(base64);
+};
+
+og_token = getParameterByName('id_token');
+token = parseJwt(og_token);
+var amIADoctor = false;
+var isDoctor = false;
+
+var self_details = null;
+const Http7 = new XMLHttpRequest();
+Http7.open("GET", 'https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/user?userid='+token['email']);
+Http7.send();
+console.log(token['email']);
+Http7.onreadystatechange=(e)=>{
+  console.log(Http);
+  if(Http7.readyState == 4){
+    self_details = Http7.responseText;
+    if(!self_details || self_details === "[]") {
+      console.log('Empty');
+      window.location.replace("register.html#id_token=" + og_token);
+    }else {
+        console.log(self_details);
+        self_details = JSON.parse(self_details);
+        amIADoctor = self_details['isDoctor'];
+        isDoctor = self_details['isDoctor'];
+    }
+  }
+}
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -15,8 +49,6 @@ function getParameterByName(name, url) {
 if (getParameterByName("otherid")) {
     currId = getParameterByName("otherId");
 }
-
-var isDoctor = false;
 
 function fillUserDetails(inputJson) {
     console.log("hi");
@@ -39,12 +71,11 @@ function fillUserDetails(inputJson) {
         val1.setAttribute('style', 'font-size:22px');
         val1.classList.add('name');
 
-        if (inputJson[counter]['isDoctor'] === true) isDoctor = true;
         userIds.push(inputJson[counter]['id']);
 
         var elem = inputJson[counter];
         var currElemId = inputJson[counter]['id'];
-        var name = '<a style="color:black" href=# class="userDetails" id='+ currElemId +'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
+        var name = '<a style="color:black" href=messages.html#id_token=' + og_token+ ' class="userDetails" id='+ currElemId +'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
         name = name + '<script> document.getElementById("' + currElemId + '").addEventListener("click", function(){console.log("joo")}); </script>'; 
         
         var specialization = "";
@@ -78,8 +109,8 @@ Http.open("POST", url);
 Http.send();
 Http.onreadystatechange=(e)=>{
     if (Http.responseText.length > 0 && Http.readyState === 4) {
-        var conversations = JSON.parse(Http.responseText);
-        fillUserDetails(conversations);
+        var allUsers = JSON.parse(Http.responseText);
+        fillUserDetails(allUsers);
     }
 }
 
@@ -133,19 +164,21 @@ function keyPress(e) {
 
 function populateConversation(conversation) {
     messages = [];
-    for (currMsg in conversation) {
+    for (var i in conversation) {
+        console.log(conversation[i]);
+        currMsg = conversation[i]['text'];
         var sentBy = currMsg.split('|||')[0];
         var txt = currMsg.split('|||')[1];
         messages.push({"id": sentBy, "message": txt});
     }
 
-    for (currMsg in messages) displayMessage();
+    for (currMsg in messages) displayMessage(messages[currMsg]);
 }
 
 function getAllMessages() {
     const Http5 = new XMLHttpRequest();
     doc_flag = "0";
-    if(isDoctor){
+    if(amIADoctor){
         doc_flag = "1"
     }
 
@@ -155,19 +188,26 @@ function getAllMessages() {
     Http5.onreadystatechange=(e)=>{
         if (Http5.responseText.length > 0 && Http5.readyState === 4) {
             var conversations = JSON.parse(Http5.responseText);
-            populateConversation(conversations);
+            populateConversation(conversations['messages']);
         }
     }
 }
-
-function displayMessage() {
+function displayMessage(msg) {
+    var currMessage = '';
+    var reqId = '';
+    if(!msg || msg === undefined) {
+        currMessage = messages[messages.length-1]['message'];
+        reqId = messages[messages.length-1]['id'];
+    }else{
+        currMessage = msg['message'];
+        reqId = msg['id'];
+    }
     var chatElem = document.createElement('p');
     var currId = "chatlog" + messages.length;
     chatElem.id = currId;
-    var currMessage = messages[messages.length-1]['message'];
-    console.log(messages[messages.length-1]);
-    console.log(selfId);
-    if (messages[messages.length-1]['id'] === selfId) {
+    //console.log(messages[messages.length-1]);
+    //console.log(selfId);
+    if (reqId === selfId) {
         chatElem.setAttribute("style", "display:block; margin-left:70px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:15px");
     } else {
         chatElem.setAttribute("style", "display:block; margin-right:70px; background-color:#4bc970; border-radius:3px; padding:15px");
@@ -182,7 +222,7 @@ function myResponseUtil() {
     if (document.getElementById("chatbox").value !== "") {
         lastUserMessage = document.getElementById("chatbox").value;
         messages.push({'id': selfId, 'message': lastUserMessage});
-        displayMessage(messages);
+        displayMessage();
         document.getElementById("chatbox").value = "";
     }
 }
@@ -194,3 +234,4 @@ document.addEventListener('click', function(e) {
         getAllMessages();
     }
 });
+

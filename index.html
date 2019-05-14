@@ -36,9 +36,7 @@
 	    <nav>
 	        <div class="site-title"><p>Alice Health Service</p></div>
 	        <ul>
-	            <li><a href="/archive">My Messages</a></li>
-	            <li><a href="/events">Profile</a></li>
-	            <li><a href="/contact">About</a></li>
+	            <li><a href="javascript:void(0);" onclick="redir();">My Messages</a></li>
 	        <ul>
 	    </nav>
 	
@@ -55,11 +53,9 @@
 						<div class="msg_history">
 							<div id="m_his">
 								<div class="incoming_msg">
-									<div class="incoming_msg_img"> <img src="img/icon.jpg"> </div>
+									<div class="incoming_msg_img"> </div>
 									<div class="received_msg">
-										<div class="received_withd_msg">
 											<p>Hi! Welcome to Alice Health Service?</p>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -89,7 +85,7 @@
 					<input type="textarea" id="password" name="user_password"  style="margin-bottom: 20px">
 					
 				</fieldset>
-				<button onclick="submitSymptom()">Submit symptoms.</button>
+				<button id = 'sb' onclick="submitSymptom()">Submit symptoms.</button>
 			</form>
 		</div>
 	</div>  
