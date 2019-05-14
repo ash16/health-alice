@@ -51,8 +51,8 @@ var messages = [];
 var lastMessage = "";
 
 const Http = new XMLHttpRequest();
-var userid = window.sessionStorage['username']; // 'aa4213@columbia.edu'
-var url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?userid=' + userid;
+var selfId = window.sessionStorage['username']; // 'aa4213@columbia.edu'
+var url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?userid=' + selfId;
 Http.open("POST", url);
 Http.send();
 Http.onreadystatechange=(e)=>{
@@ -73,18 +73,30 @@ webSocket.onopen = function (event) {
     }
 };
 
-webSocket.onmessage = function (event) {
+var curr_id = "";
 
+webSocket.onmessage = function (event) {
     console.log(event.data);
+    var info = event.data;
+    if (info.startsWith("Echo:")) {
+        info = info.split(":")[1];
+        info = info.substring(1);
+        var details = info.split("|||");
+        curr_id = details[0];
+        var curr_message = details[1];
+        messages.push({"id": curr_id, "message": curr_message});
+        displayMessage();
+    }
 }
 
 function sendMessage() {
+    var currMessage = selfId + "|||" + messages[messages.length-1]['message'];
     var userMessage = {
         "action" : "onMessage",
-        "receiver_id": "st3177@columbia.edu",
-        "sender_id":"aa4213@columbia.edu",
+        "receiver_id": currId,
+        "sender_id": selfId,
         "sentByDoctor":"1",
-        "message" : messages[0]
+        "message" : currMessage
     }
     webSocket.send(JSON.stringify(userMessage)); 
     console.log("Sent");
@@ -96,24 +108,22 @@ document.onkeypress = keyPress;
 function keyPress(e) {
     var key = e.keyCode;
     if (key === 13) {
-        chatbotResponse();
+        myResponseUtil();
         sendMessage();
     }
 }
 
-function chatbotResponse() {
-    chatbotResponseUtil();
-}
-
-function displayMessage(messages) {
+function displayMessage() {
     var chatElem = document.createElement('p');
     var currId = "chatlog" + messages.length;
     chatElem.id = currId;
-    var currMessage = messages[messages.length-1];
-    if (currMessage.startsWith("<b>Doctor</b>")) {
-        chatElem.setAttribute("style", "display:block; margin-right:70px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:15px");
+    var currMessage = messages[messages.length-1]['message'];
+    console.log(messages[messages.length-1]);
+    console.log(selfId);
+    if (messages[messages.length-1]['id'] === selfId) {
+        chatElem.setAttribute("style", "display:block; margin-left:70px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:15px");
     } else {
-        chatElem.setAttribute("style", "display:block; margin-left:70px; background-color:#4bc970; border-radius:3px; padding:15px");
+        chatElem.setAttribute("style", "display:block; margin-right:70px; background-color:#4bc970; border-radius:3px; padding:15px");
     }
     chatElem.innerHTML = currMessage;
     var conversation = document.getElementById('chat');
@@ -121,15 +131,11 @@ function displayMessage(messages) {
     document.getElementById("chatbox").value = "";
 }
 
-function chatbotResponseUtil() {
+function myResponseUtil() {
     if (document.getElementById("chatbox").value !== "") {
         lastUserMessage = document.getElementById("chatbox").value;
-        messages.push(lastUserMessage);
+        messages.push({'id': selfId, 'message': lastUserMessage});
         displayMessage(messages);
         document.getElementById("chatbox").value = "";
-
-        var messageReply = "Doctor's reply here";
-        messages.push("<b>Doctor</b>: " + messageReply);
-        displayMessage(messages);
     }
 }
