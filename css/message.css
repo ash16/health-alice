@@ -13,17 +13,32 @@
     border-radius: 15px;
 }
 
-.name {
-    font-size: 22 px;
-}
-
-.details {
-    font-size: 15 px sans-serif;
-}
-
 .chatlog {
     font: 15px arial, sans-serif;
 }
+
+#chat {
+    height: 500px;
+    overflow: scroll;
+    /* border: 1px solid #dad7d7;
+    border-radius: 10px; */
+    margin-top: 20px;
+    padding: 10px;
+}
+
+#chatbox {
+    font: 17px arial, sans-serif;
+    height: 22px;
+    width: 100%;
+    padding-bottom: 80px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+  }
+  
 
 #doctors-list {
     height: 25px;
@@ -37,7 +52,6 @@
   }
   
   #doctors-list td, #doctors-list th {
-    border: 1px solid #ddd;
     padding: 12px;
   }
   

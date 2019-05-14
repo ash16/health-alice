@@ -164,35 +164,41 @@ $(test2).change(function() {
     $('#selectedText').text(alt_sel);
 });
 
+function sendMessage(e) {
+  e.preventDefault();
+  var a = $("<div class='outgoing_msg'><div class='sent_msg'><p>" + $('#userMsg').val() + "</p></div></div>");
+  $("#m_his").append(a);
+  body = {
+  // This is where you define the body of the request,
+      "userMessage": $('#userMsg').val()
+  };
+  apigClient.chatbotPost(params, body, additionalParams)
+    .then(function(data){
+        resp = JSON.parse(data['data']['body']);
+        // Add success callback code here.
+        $("#userMsg").val("");
+        var a = $("<div class='incoming_msg'><div class='incoming_msg_img'><img src='img/icon.jpg'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
+        $("#m_his").append(a); 
+           
+        if($("#userMsg").val("") === "Please provide your symptoms below :") {
+          console.log("death");
+          b = '<div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div>'
+          // b =b + 'var test = $('#test');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});'
+          // b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});'
+          $("#m_his").append(b);
+        }
+
+        //console.log(data["data"]["response"]);
+
+        // $('#botResponse').val(data["data"]["response"]);
+    }).catch( function(result){
+        // Add error callback code here.
+        console.log(result);
+    });
+}
+
 $('document').ready(function() {
     $('#msg_send').click(function(e) {
-        e.preventDefault();
-        var a = $("<div class='outgoing_msg'><div class='sent_msg'><p>" + $('#userMsg').val() + "</p></div></div>");
-        $("#m_his").append(a);
-        body = {
-        // This is where you define the body of the request,
-            "userMessage": $('#userMsg').val()
-        };
-        console.log("hi");
-        apigClient.chatbotPost(params, body, additionalParams)
-            .then(function(data){
-              console.log("hi");
-                resp = JSON.parse(data['data']['body']);
-                // Add success callback code here.
-                $("#userMsg").val("");
-                var a = $("<div class='incoming_msg'><div class='incoming_msg_img'><img src='img/icon.jpg'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
-                $("#m_his").append(a);    
-                console.log('yo');
-                console.log($("#userMsg").val("") );
-                if($("#userMsg").val("") === "Please provide your symptoms below :") {
-                  console.log("death");
-                  b = '<div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div>'
-                  // b =b + 'var test = $('#test');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});'
-                  // b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});'
-                  $("#m_his").append(b);
-                }
-            }).catch( function(result){
-                console.log(result);
-            });
+        sendMessage(e);
     });
 }); 
