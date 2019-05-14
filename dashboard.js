@@ -67,8 +67,8 @@ my_data = []
 
 function init() {
   var uri = "https://authservice.priaid.ch/login";
-  var api_key = "n3A9J_GMAIL_COM_AUT";
-  var secret_key = "Ft3q8C2MyWw4j5BAr";
+  var api_key = "b5WGs_GMAIL_COM_AUT";
+  var secret_key = "m2R4PxEp56StLw37W";
   var computedHash = CryptoJS.HmacMD5(uri, secret_key);
   var computedHashString = computedHash.toString(CryptoJS.enc.Base64); 
 
@@ -156,6 +156,12 @@ function submitSymptom() {
   Http.onreadystatechange=(e)=>{
     dat = Http.responseText;
     console.log(dat);
+    data = {
+      body : dat, 
+      userData : response
+    };
+    //Now redirect to doctorResults.html
+    window.location = "doctorResults.html?response=" + btoa(JSON.stringify(dat))+"#id_token=" + getParameterByName('id_token');
   };
 
 };
@@ -184,10 +190,9 @@ function sendMessage(e) {
         $("#m_his").append(a); 
         console.log(resp['message']);
         if(resp['message'] === "Please provide your symptoms  below : ") {
-          b = '<div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button></div><div><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div>';
+          b = '<div><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div><div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button></div>';
           b =b + '<script>var test = $(\'#test\');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});';
           b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});';
-          b = b + '$(test).bind(\'keypress\', modalEnter);function modalEnter(e){console.log("mar ka");if(e.keyCode === 13){document.getElementById("sub_but").click()}};</script>';
           $("#m_his").append(b);
         }
 

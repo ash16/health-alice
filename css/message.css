@@ -40,12 +40,12 @@
   }
   
 
-#doctors-list {
+#doctors-list, #diagnosis-list{
     height: 25px;
     width: 100%;
 }
 
-#doctors-list {
+#doctors-list,#diagnosis-list {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
@@ -53,6 +53,22 @@
   
   #doctors-list td, #doctors-list th {
     padding: 12px;
+  }
+  #diagnosis-list td, #diagnosis-list th {
+    padding: 12px;
+  }
+  
+
+  #diagnosis-list tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #diagnosis-list tr:hover {background-color: #ddd;}
+  
+  #diagnosis-list th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #323232;
+    color: white;
   }
   
   #doctors-list tr:nth-child(even){background-color: #f2f2f2;}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel='stylesheet' href="header.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+	<link href="css/style.css" type="text/css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href="header.css">
+    <script type="text/javascript" src="message.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link href="css/message.css" type="text/css" rel="stylesheet">
+    <!-- <link href="css/style.css" type="text/css" rel="stylesheet"> -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+	<script src="http://authservice.priaid.ch/js/hmac-md5.js"></script>
+	<script src="http://authservice.priaid.ch/js/enc-base64-min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+ 	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Alice HealthService</title>
+    <head>
+	<header>
+	    <div class="clear"></div>
+	    <nav>
+	        <div class="site-title"><p>Alice Health Service</p></div>
+	        <ul>
+	            <li><a href="/archive">My Messages</a></li>
+	            <li><a href="/events">Profile</a></li>
+	            <li><a href="/contact">About</a></li>
+	        <ul>
+	    </nav>
+	
+	</header>
+</head>
+	<body onload="fillDiagnosis();fillDoctorDetails();"> 
+		<div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4" id="doctor-details">
+                    <table id="doctors-list">
+                        <tr>
+                            <th>Please contact one of the following doctors : </th>
+                        </tr>
+                    </table>
+                </div>
+        	<div class="col-md-1"></div>
+            <div class="col-md-4" id="diagnosis-details">
+                <table id="diagnosis-list">
+                    <tr>
+                        <th>As per the symptoms you may have one of the following ailments : </th>
+                    </tr>
+                </table>
+            </div>
+
+    	</div>
+    </body>
+</body>
+<script type="text/javascript" src="doctorResponse.js"></script>
+</html>
