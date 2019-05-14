@@ -172,7 +172,7 @@ function submitSymptom() {
       userData : response
     };
     //Now redirect to doctorResults.html
-    window.location = "doctorResults.html?response=" + btoa(JSON.stringify(dat))+"#id_token=" + getParameterByName('id_token');
+    window.location = "doctorResults.html?response=" + btoa(JSON.stringify(dat))+"#id_token=" + og_token;
   };
 
 };

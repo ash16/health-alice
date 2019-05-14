@@ -109,6 +109,7 @@ Http.open("POST", url);
 Http.send();
 Http.onreadystatechange=(e)=>{
     if (Http.responseText.length > 0 && Http.readyState === 4) {
+        console.log('gandu');
         var allUsers = JSON.parse(Http.responseText);
         fillUserDetails(allUsers);
     }
@@ -136,7 +137,7 @@ webSocket.onmessage = function (event) {
         messages.push({"id": curr_id, "message": curr_message});
         displayMessage();
     }
-}
+};
 
 function sendMessage() {
     var currMessage = selfId + "|||" + messages[messages.length-1]['message'];
