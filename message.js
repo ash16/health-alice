@@ -103,7 +103,7 @@ var messages = [];
 var lastMessage = "";
 
 const Http = new XMLHttpRequest();
-var selfId = window.sessionStorage['username']; // 'aa4213@columbia.edu'
+var selfId = token['email']; // 'aa4213@columbia.edu'
 var url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?userid=' + selfId;
 Http.open("POST", url);
 Http.send();
