@@ -62,9 +62,9 @@ function chatbotResponseUtil() {
             var chatElem = document.getElementById(currId);
             var currMessage = messages[messages.length - i];
             if (currMessage.startsWith("<b>Doctor</b>")) {
-                chatElem.setAttribute("style", "margin-left:60px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:5px");
+                chatElem.setAttribute("style", "display:block; margin-left:70px; background-color:#eaf0f1;border:1px solid #ccc7c7; border-radius:3px; padding:15px");
             } else {
-                chatElem.setAttribute("style", "margin-right:60px; background-color:#d5e0e2;border:1px solid #ccc7c7; border-radius:3px; padding:5px");
+                chatElem.setAttribute("style", "display:block; margin-right:70px; background-color:#4bc970; border-radius:3px; padding:15px");
             }
             chatElem.innerHTML = currMessage;
         }
