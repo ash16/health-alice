@@ -41,9 +41,11 @@ const Http = new XMLHttpRequest();
 const url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/user?userid='+token['email'];
 Http.open("GET", url);
 Http.send();
+console.log(token['email']);
 Http.onreadystatechange=(e)=>{
     response = Http.responseText;
     if(response.size==0) {
+      console.log('Empty');
         window.sessionStorage.setItem("token", og_token);
         window.sessionStorage.setItem("username", token['email'])
             window.location.replace("register.html#id_token=" + og_token);
@@ -74,7 +76,6 @@ function init() {
   Http1.onreadystatechange=(e)=>{
     medical_api_token = JSON.parse(Http1.responseText);
     medical_api_token = medical_api_token['Token'];
-    console.log(medical_api_token);
     const Http = new XMLHttpRequest();
     const url = 'https://healthservice.priaid.ch/symptoms?token=' + medical_api_token + '&format=json&language=en-gb';
     Http.open("GET", url);
@@ -83,21 +84,13 @@ function init() {
       str = Http.responseText.replace(new RegExp('Name', 'g'), 'text');
       str = str.replace(new RegExp('ID','g'), 'id');
       my_data = JSON.parse(str);
-      var test = $('#test');
       var test2 = $('#test2');
-      $(test).select2({
-          data:my_data,
-          placeholder: 'Select from the list of options',
-          multiple: true
-      });
       $(test2).select2({
           data:my_data,
           placeholder: 'Select from the list of options',
           multiple: true
       });
     };
-    //document.getElementById('test').setAttribute('style', 'background: #4bc970');
-    //document.getElementById('test2').setAttribute('style', 'background: #4bc970');
   }; 
 
 };
@@ -125,33 +118,50 @@ var apigClient = apigClientFactory.newClient({
 
 function submitSymptom() {
   const Http = new XMLHttpRequest();
-  const gender = 'female';
-  const age = response['age'];
+  var gender = 'female';
+  var age = response['age'];
   symptoms = '';
-  selections = JSON.parse(selections);
-  for(var i=0;i<selections.length;i++) {
+  sel = selections;
+  if(selections == null) {
+      sel = alt_sel;
+  } 
+
+  sel = JSON.parse(sel);
+  console.log(sel);
+  for(var i=0;i<sel.length;i++) {
     if(i==0){
-        symptoms = selections[i]["id"];
+        symptoms = sel[i]["id"];
     }else {
-        symptoms = symptoms + ',' +  selections[i]["id"];
+        symptoms = symptoms + ',' +  sel[i]["id"];
     }
   }
-  const url = 'https://healthservice.priaid.ch/diagnosis?symptoms=[' + symptoms + ']&gender=' + gender + '&year_of_birth=' + age +'&token='+ medical_api_token;
-  console.log(url);
+  gender = 'female'
+  if('gender' in response) {
+    gender = response['gender'];
+  }
+
+  symptoms = '[' + symptoms + ']'
+  data = {
+    symptoms : symptoms,
+    gender : response['gender'],
+    age : age
+  };
+  console.log(data);
+  const url = 'https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?age=' + age + '&gender='  + gender + '&symptoms=' + symptoms
   Http.open("GET", url);
   Http.send();
   Http.onreadystatechange=(e)=>{
-    str = Http.responseText;
-    console.log('suks');
-    console.log(str);
+    dat = Http.responseText;
+    console.log(dat);
   };
 
 };
 var selections = null;
-$(test).change(function() {
-    selections = ( JSON.stringify($(test).select2('data')) );
-    console.log('Selected options: ' + selections);
-    $('#selectedText').text(selections);
+var alt_sel = null;
+
+$(test2).change(function() {
+    alt_sel = ( JSON.stringify($(test2).select2('data')) );
+    $('#selectedText').text(alt_sel);
 });
 
 $('document').ready(function() {
@@ -163,19 +173,25 @@ $('document').ready(function() {
         // This is where you define the body of the request,
             "userMessage": $('#userMsg').val()
         };
+        console.log("hi");
         apigClient.chatbotPost(params, body, additionalParams)
             .then(function(data){
+              console.log("hi");
                 resp = JSON.parse(data['data']['body']);
                 // Add success callback code here.
                 $("#userMsg").val("");
                 var a = $("<div class='incoming_msg'><div class='incoming_msg_img'><img src='img/icon.jpg'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
                 $("#m_his").append(a);    
-
-                //console.log(data["data"]["response"]);
-
-                // $('#botResponse').val(data["data"]["response"]);
+                console.log('yo');
+                console.log($("#userMsg").val("") );
+                if($("#userMsg").val("") === "Please provide your symptoms below :") {
+                  console.log("death");
+                  b = '<div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div>'
+                  // b =b + 'var test = $('#test');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});'
+                  // b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});'
+                  $("#m_his").append(b);
+                }
             }).catch( function(result){
-                // Add error callback code here.
                 console.log(result);
             });
     });

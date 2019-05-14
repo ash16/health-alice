@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel='stylesheet' href="header.css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -22,6 +23,7 @@
 	<script src="http://authservice.priaid.ch/js/hmac-md5.js"></script>
 	<script src="http://authservice.priaid.ch/js/enc-base64-min.js"></script>
 	<link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="file.js"></script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,10 +41,14 @@
 	            <li><a href="/contact">About</a></li>
 	        <ul>
 	    </nav>
+	
 	</header>
 </head>
-<body>
-	<div class="content-container">
+<body onload="check()">
+	<div></div>
+	<div></div>
+	<div></div>
+	<div id='main' class="content-container">
 		<div class="chat-view">
 			<h3 class=" text-center">Alice Health Bot</h3>
 			<div class="messaging">
@@ -65,32 +71,28 @@
 									<button class="msg_send_btn" id = "msg_send" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
 								</div>
 							</div>
-							<div>
-								<button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-								<select type="hidden" id="test" style="display: inline-block;position: relative;right: 0" ></select>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="form-view">
-			<form action="index.html" method="post">
+			<form>
 				<!-- <h1>Health symptoms form</h1> -->
 				<fieldset>
-					<legend><span class="number">1</span>Health Information</legend>
+					<legend><span class="number">1</span>Hi, please fill this form with symptoms or use the Alice Chatbot!</legend>
 					<label for="symptoms">Symptoms:</label>
 					<select type="hidden" id="test2" style="display: inline-block;position: relative;right: 0" ></select>
 					<label></label>
 					
-					<label for="time">How long have you feeling like this?</label>
+					<label for="time">How long have these symptoms existed ?</label>
 					<input type="date" id="time" name="user_time">
 					
 					<label for="extra_info">Any other information that you wish to share</label>
 					<input type="textarea" id="password" name="user_password">
 					
 				</fieldset>
-				<button type="submit">Sign Up</button>
+				<button onclick="submitSymptom()">Submit results</button>
 			</form>
 		</div>
 	</div>  
