@@ -170,6 +170,7 @@ function populateConversation(conversation) {
     var newChatDialog = document.createElement('div');
     newChatDialog.id = 'chat';
     newChatDialog.appendChild(getHelperChatMessageInput());
+    newChatDialog.appendChild(getSpeechChatMessageInput());
 
     var currChatDialog = document.getElementById('chat');
     currChatDialog.replaceWith(newChatDialog);
@@ -193,6 +194,45 @@ function getHelperChatMessageInput() {
     input.setAttribute("placeholder", "Hi there! How can I help you?");
     return input;
 }
+
+function getSpeechChatMessageInput() {
+    var input = document.createElement('i');
+    input.setAttribute("class", "fa fa-microphone fa_custom");
+    return input;
+}
+
+window.speechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
+const recognition = new window.speechRecognition();
+
+// see what we are saying as we are saying it
+recognition.continuous = true;
+recognition.interimResults = false;
+
+prev_length = 0
+var trans = ""
+
+recognition.addEventListener("result", e => {
+    console.log(e);
+    const transcript = Array.from(e.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join("");
+    console.log("Heylo")
+    console.log(transcript);
+    trans = transcript.substring(prev_length);
+    prev_length = prev_length + trans.length;
+    console.log(trans)
+    if (trans.includes("Alice") || trans.includes(".")) {
+        console.log("entered");
+        document.getElementById("chatbox").value = trans.replace('Alice', '').trim();
+        console.log("inside");
+        myResponseUtil();
+        sendMessage();
+    }
+    console.log("stopped");
+  });
+  
+  recognition.addEventListener("end", recognition.start());
 
 function getAllMessages() {
     const Http5 = new XMLHttpRequest();
@@ -233,7 +273,7 @@ function displayMessage(msg) {
     }
     chatElem.innerHTML = currMessage;
     var conversation = document.getElementById('chat');
-    conversation.insertBefore(chatElem, conversation.children[conversation.childElementCount-1]);
+    conversation.insertBefore(chatElem, conversation.children[conversation.childElementCount-2]);
     document.getElementById("chatbox").value = "";
 }
 
