@@ -179,23 +179,37 @@ function sendMessage(e) {
         $("#userMsg").val("");
         var a = $("<div class='incoming_msg'><div class='incoming_msg_img'><img src='img/icon.jpg'></div><div class='received_msg'><p>" + resp['message'] + "</p></div></div></div>");
         $("#m_his").append(a); 
-           
-        if($("#userMsg").val("") === "Please provide your symptoms below :") {
-          console.log("death");
-          b = '<div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div>'
-          // b =b + 'var test = $('#test');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});'
-          // b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});'
+        console.log(resp['message']);
+        if(resp['message'] === "Please provide your symptoms  below : ") {
+          b = '<div><button class="sub_but" id = "sub_but" onclick="submitSymptom()"><i class="fa fa-paper-plane-o\"></i></button></div><div><select id="test" style="display: inline-block;position: relative;right: 0" ></select></div>';
+          b =b + '<script>var test = $(\'#test\');$(test).select2({data:my_data,placeholder: "Select from the list of options",multiple: true});';
+          b = b+ '$(test).change(function() {selections = ( JSON.stringify($(test).select2(\'data\')) );$(\'#selectedText\').text(selections);});';
+          b = b + '$(test).bind(\'keypress\', modalEnter);function modalEnter(e){console.log("mar ka");if(e.keyCode === 13){document.getElementById("sub_but").click()}};</script>';
           $("#m_his").append(b);
         }
 
-        //console.log(data["data"]["response"]);
-
-        // $('#botResponse').val(data["data"]["response"]);
     }).catch( function(result){
         // Add error callback code here.
         console.log(result);
     });
 }
+// Get the input field
+var input = document.getElementById("userMsg");
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("msg_send").click();
+  }
+});
+
+
+
+
 
 $('document').ready(function() {
     $('#msg_send').click(function(e) {
