@@ -43,7 +43,7 @@ function fillDiagnosis() {
         val1.setAttribute('style', 'font-size:22px');
         val1.classList.add('name');
 
-        var name = '<a style="color:black" href=# id='+i+'>' + inputJson[elem]  + '</a>';
+        var name = '<p style="color:black" id='+i+'>' + inputJson[elem]  + '</p>';
         
         var curr_diag = name;
         val1.innerHTML = curr_diag;
@@ -87,7 +87,7 @@ function fillDoctorDetails() {
         }
         if (specialization.length > 2) specialization = specialization.substr(0, specialization.length - 2);
         specialization = specialization + '</span>';
-        var contact = "<a href='messages.html?userid='userDat['email']+'&otherid=' + elem['id']+'isDoctor=false'>Contact now.</a>";
+        var contact = "<a href='messages.html?userid=" + userDat['email']+"&otherid=" + elem['id']+"isDoctor=false#id_token" + getParameterByName('id_token','#') + "'>Contact now.</a>";
         var curr_doctor = name + '<br>' + specialization + '<br>' + contact ;
 
         val1.innerHTML = curr_doctor;
