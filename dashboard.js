@@ -37,6 +37,8 @@ token = parseJwt(og_token);
 console.log(token);
 var response = null;
 
+window.sessionStorage.setItem("token", og_token);
+window.sessionStorage.setItem("username", token['email']);
 const Http = new XMLHttpRequest();
 const url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/user?userid='+token['email'];
 Http.open("GET", url);
@@ -46,9 +48,7 @@ Http.onreadystatechange=(e)=>{
     response = Http.responseText;
     if(response.size==0) {
       console.log('Empty');
-        window.sessionStorage.setItem("token", og_token);
-        window.sessionStorage.setItem("username", token['email'])
-            window.location.replace("register.html#id_token=" + og_token);
+      window.location.replace("register.html#id_token=" + og_token);
     }else {
         console.log(response);
         response = JSON.parse(response);
@@ -76,12 +76,12 @@ function init() {
   Http1.onreadystatechange=(e)=>{
     medical_api_token = JSON.parse(Http1.responseText);
     medical_api_token = medical_api_token['Token'];
-    const Http = new XMLHttpRequest();
+    const Http2 = new XMLHttpRequest();
     const url = 'https://healthservice.priaid.ch/symptoms?token=' + medical_api_token + '&format=json&language=en-gb';
-    Http.open("GET", url);
-    Http.send();
-    Http.onreadystatechange=(e)=>{
-      str = Http.responseText.replace(new RegExp('Name', 'g'), 'text');
+    Http2.open("GET", url);
+    Http2.send();
+    Http2.onreadystatechange=(e)=>{
+      str = Http2.responseText.replace(new RegExp('Name', 'g'), 'text');
       str = str.replace(new RegExp('ID','g'), 'id');
       my_data = JSON.parse(str);
       var test2 = $('#test2');
@@ -117,7 +117,7 @@ var apigClient = apigClientFactory.newClient({
 });
 
 function submitSymptom() {
-  const Http = new XMLHttpRequest();
+  
   var gender = 'female';
   var age = response['age'];
   symptoms = '';
@@ -136,7 +136,7 @@ function submitSymptom() {
     }
   }
   gender = 'female'
-  if('gender' in response) {
+  if(response['gender'] != undefined) {
     gender = response['gender'];
   }
 
@@ -147,11 +147,12 @@ function submitSymptom() {
     age : age
   };
   console.log(data);
-  const url = 'https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?age=' + age + '&gender='  + gender + '&symptoms=' + symptoms
-  Http.open("GET", url);
-  Http.send();
-  Http.onreadystatechange=(e)=>{
-    dat = Http.responseText;
+  const url = 'https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?age=' + age + '&gender='  + gender + '&symptoms=' + symptoms;
+  const Http3 = new XMLHttpRequest();
+  Http3.open("GET", url);
+  Http3.send();
+  Http3.onreadystatechange=(e)=>{
+    dat = Http3.responseText;
     console.log(dat);
   };
 

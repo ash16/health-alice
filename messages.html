@@ -44,14 +44,14 @@
         </header>
     </head>
 
-    <body onload="fillDoctorDetails(doctorsInfo)">
+    <body>
         <div class="content-container">
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-4" id="doctor-details">
                     <table id="doctors-list">
                         <tr>
-                            <th>Doctors</th>
+                            <th id="userTitle"></th>
                         </tr>
                     </table>
                 </div>
@@ -68,26 +68,26 @@
     </body>
 
     <script>
-        var doctorsInfo = [
-            {
-                firstName: 'Prashant',
-                lastName: 'Kumar',
-                specialization: ['Physician', 'Cardiologist', 'Cardiovascular surgeon'],
-                id: '1'
-            },
-            {
-                firstName: 'Shreya',
-                lastName: 'Agarwal',
-                specialization: ['Physician', 'Adolescent medicine specialist'],
-                id: '2'
-            },
-            {
-                firstName: 'Rishi',
-                lastName: 'Verma',
-                specialization: ['Physician', 'Gynecologist', 'Anesthesiologist'],
-                id: '3'
-            }
-        ];
+        // var doctorsInfo = [
+        //     {
+        //         firstName: 'Prashant',
+        //         lastName: 'Kumar',
+        //         specialization: ['Physician', 'Cardiologist', 'Cardiovascular surgeon'],
+        //         id: '1'
+        //     },
+        //     {
+        //         firstName: 'Shreya',
+        //         lastName: 'Agarwal',
+        //         specialization: ['Physician', 'Adolescent medicine specialist'],
+        //         id: '2'
+        //     },
+        //     {
+        //         firstName: 'Rishi',
+        //         lastName: 'Verma',
+        //         specialization: ['Physician', 'Gynecologist', 'Anesthesiologist'],
+        //         id: '3'
+        //     }
+        // ];
 
     </script>
 

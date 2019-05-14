@@ -1,4 +1,8 @@
-function fillDoctorDetails(inputJson) {
+var userIds = [];
+
+function fillUserDetails(inputJson) {
+    var title = document.getElementById('userTitle');
+    title.innerHTML = "User";
     var num = inputJson.length;
     doctors = document.getElementById('doctors-list');
     if (num === 0) {
@@ -7,32 +11,84 @@ function fillDoctorDetails(inputJson) {
         cell1.innerHTML = "No data available";
         return;
     }
+    var isDoctor = false;
 
-    for (var i = 0; i < num; i++) {
+    for (var counter = 0; counter < num; counter++) {
         var row = doctors.insertRow(-1);
         var cell1 = document.createElement('tr');
         var val1 = document.createElement('td');
         val1.setAttribute('style', 'font-size:22px');
         val1.classList.add('name');
 
-        var elem = inputJson[i];
-        var name = '<a style="color:black" href=# id='+i+'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
+        if (inputJson[counter]['isDoctor'] === true) isDoctor = true;
+        userIds.push(inputJson[counter]['id']);
+
+        var elem = inputJson[counter];
+        var name = '<a style="color:black" href=# id='+ counter +'>' + elem['firstName'] + ' ' + elem['lastName'] + '</a>';
         
-        var specialization = '<span style="font-size:15px; font-style:italic">';
-        for (var j = 0; j < elem['specialization'].length; j++) {
-            specialization = specialization + elem['specialization'][j] + ", ";
+        var specialization = "";
+        if ((elem['specialization'] != undefined) && (elem['specialization'].length > 0)) {
+            specialization = '<span style="font-size:15px; font-style:italic">';
+            for (var j = 0; j < elem['specialization'].length; j++) {
+                specialization = specialization + elem['specialization'][j] + ", ";
+            }
+            if (specialization.length > 2) {
+                specialization = specialization.substr(0, specialization.length - 2);
+            }
+            specialization = specialization + '</span>';
         }
-        if (specialization.length > 2) specialization = specialization.substr(0, specialization.length - 2);
-        specialization = specialization + '</span>';
-        var curr_doctor = name + '<br>' + specialization;
-        val1.innerHTML = curr_doctor;
+        var curr_user = name + '<br>' + specialization;
+        val1.innerHTML = curr_user;
         cell1.appendChild(val1);
         row.appendChild(cell1);
     }
+    if (isDoctor) title.innerHTML = "Patients";
+    else title.innerHTML = "Doctors";
 }
 
+//message = {"action" : "onMessage" , "message" : "working firse"};
 var messages = [];
 var lastMessage = "";
+
+const Http = new XMLHttpRequest();
+var userid = window.sessionStorage['username']; // 'aa4213@columbia.edu'
+var url='https://qc1nm97cu7.execute-api.us-east-1.amazonaws.com/beta/doctor?userid=' + userid;
+Http.open("POST", url);
+Http.send();
+Http.onreadystatechange=(e)=>{
+    if (Http.responseText.length > 0 && Http.readyState === 4) {
+        var conversations = JSON.parse(Http.responseText);
+        fillUserDetails(conversations);
+    }
+}
+
+var userId = window.sessionStorage["username"];
+var url2 = "wss://7bny2h0qhf.execute-api.us-east-1.amazonaws.com/test?userid=";
+url2 = url2 + userId;
+var webSocket = new WebSocket(url2);
+webSocket.onopen = function (event) {
+    if (messages.length > 0) {
+        console.log("Starting sending");
+        //message['message'] = "Here's some text that the server is urgently awaiting!";
+    }
+};
+
+webSocket.onmessage = function (event) {
+
+    console.log(event.data);
+}
+
+function sendMessage() {
+    var userMessage = {
+        "action" : "onMessage",
+        "receiver_id": "st3177@columbia.edu",
+        "sender_id":"aa4213@columbia.edu",
+        "sentByDoctor":"1",
+        "message" : messages[0]
+    }
+    webSocket.send(JSON.stringify(userMessage)); 
+    console.log("Sent");
+}
 
 document.onkeypress = keyPress;
 
@@ -41,6 +97,7 @@ function keyPress(e) {
     var key = e.keyCode;
     if (key === 13) {
         chatbotResponse();
+        sendMessage();
     }
 }
 
